@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cha - List</title>
+</head>
+<body>
+    <h2>CHA - List</h2>
+    <a href="./cha_add">ADD new cha</a>
+    <table width="50%" border="1">
+        <tr>
+            <td><h3>Title</h3></td>
+            <td><h3>BungBau</h3></td> 
+        </tr>
+        <% ds.forEach(function(cha){ %>
+            <tr>
+                <td><%-cha.Title %></td>
+                <td></td>
+                <td>
+                    <a href="./cha_edit/<%- cha._id%>">Edit</a>
+                    <a onclick="return confirm('Are you sure you want to delete?')" href="./cha_delete/<%- cha._id%>">Delete</a>
+                </td> 
+            </tr>
+        <% }); %>
+    </table>
+</body>
+</html>
