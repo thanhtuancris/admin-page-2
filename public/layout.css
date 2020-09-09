@@ -1,0 +1,15 @@
+#wrapper{
+    width: 95%;
+    margin: auto;
+}
+#header{
+    width: 100%;
+    background-color: greenyellow;
+    font-size: 50px;
+    font-weight: bold;
+}
+#content{
+    width: 100%;
+    background-color: cornsilk;
+    
+}

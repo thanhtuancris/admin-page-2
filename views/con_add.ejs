@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Con-add</title>
+</head>
+<body>
+    <form action="./con_add" method="post">
+        <select name="slcCha" id="">
+            <% dsCha.forEach(function(item){ %>
+                <option value="<%- item.Title%>"><%- item.Title%></option>
+                <% }) %>
+        </select>
+        <input type="text" name="txtTitle" placeholder="Title">
+        <input type="submit" value="Add new con">
+    </form>
+</body>
+</html>

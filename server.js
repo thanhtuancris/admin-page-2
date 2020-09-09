@@ -15,7 +15,7 @@ const port = 3000;
 
 //connect DB
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/admin-page-2', {useNewUrlParser: true, useUnifiedTopology: true}, function(err) {
+mongoose.connect('mongodb://localhost:27017/admin-page-2', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, function(err) {
     if(err) {
         console.log('Error connecting' + err);
     }else{
@@ -56,7 +56,7 @@ app.get('/cha_list', function(req, res){
                 message: err
             });
         }else{
-            res.render('cha_list', {ds: data});
+            res.render('home', {trang:"cha_list", ds: data});
         }
     });
 });
@@ -69,7 +69,8 @@ app.get('/cha_edit/:id', function(req, res){
                 message: err
             });
         }else{
-            res.render('cha_edit', {cha: data});
+            // res.render('cha_edit', {cha: data});
+            res.render('home', {trang:"cha_edit", ds: data}); 
         }
     });
 });
@@ -95,6 +96,48 @@ app.get('/cha_delete/:id', function(req, res){
             });
         }else{
             res.redirect('../cha_list');
+        }
+    });
+});
+
+
+//CON
+app.get('/con_add', function(req, res){
+    Cha.find({}, function(err, data){
+        if(err){
+            res.json({
+                status: "err",
+                message: err
+            });
+        }else{
+            res.render('home2', {trang:"con_add", dsCha: data}); 
+        }
+    });
+
+});
+
+app.post('/con_add', function(req, res){
+    const newCon = Con({
+        Title: req.body.txtTitle
+    });
+    newCon.save(function(err){
+        if(err){
+            res.json({
+                status: "err",
+                message: err
+            });
+        }else{
+            Cha.findOneAndUpdate({_id:req.body.slcCha},{$push: {BungBau: newCon._id}}, function(err){
+                console.log(req.body.slcCha);
+                if(err){
+                    res.json({
+                        status: "err",
+                        message: err
+                    });
+                }else{
+                    res.render('home3'); 
+                }
+            });
         }
     });
 });
