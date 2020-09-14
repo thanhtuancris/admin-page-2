@@ -7,9 +7,9 @@
 </head>
 <body>
     <form action="./con_add" method="post">
-        <select name="slcCha" id="">
+        <select name="slcCha">
             <% dsCha.forEach(function(item){ %>
-                <option value="<%- item.Title%>"><%- item.Title%></option>
+                <option value="<%- item._id%>"><%- item.Title%></option>
                 <% }) %>
         </select>
         <input type="text" name="txtTitle" placeholder="Title">

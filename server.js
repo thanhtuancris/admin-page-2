@@ -30,6 +30,7 @@ const Con = require('./Models/Con');
 
 app.get('/cha_add', function(req, res){
     res.render('cha_add');
+    // res.render("home", {trang: "cha_add", ds});
 });
 app.post('/cha_add', function(req, res){
     const cha = new Cha({
@@ -129,6 +130,7 @@ app.post('/con_add', function(req, res){
         }else{
             Cha.findOneAndUpdate({_id:req.body.slcCha},{$push: {BungBau: newCon._id}}, function(err){
                 console.log(req.body.slcCha);
+                console.log(newCon._id);
                 if(err){
                     res.json({
                         status: "err",
@@ -142,8 +144,27 @@ app.post('/con_add', function(req, res){
     });
 });
 
-app.get('/', (req, res) =>{
-    res.render('home');
+app.get('/', (req, res) => {
+    const cha = Cha.aggregate([{ 
+        $lookup: { 
+            from: "cons",
+            localField: "BungBau",
+            foreignField: "_id",
+            as: "DSCon"
+        }
+    }], function(err, data){
+        if(err){
+            res.json({
+                status: "err",
+                message: err
+            });
+        }else{
+            // console.log(data);
+            // res.json(data);
+            res.render('home4', {data: data});
+        }
+    });
+    
 });
 
 app.listen(port, () =>{

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home4</title>
+    <style>
+        #menu{width: 150px;}
+        .cha{background-color: blue;color: white; font-weight: bold;}
+        .con{background-color: yellow;color: red; font-weight: bold;}
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <% data.forEach(function(Cha){ %>
+        <div class="cha"><%- Cha.Title %></div>
+        <div>
+            <% Cha.DSCon.forEach(function(Con){ %>
+                <div class="con"><%- Con.Title %></div>
+           <% }) %>
+            
+        </div>
+        <% }); %>
+    </div>
+</body>
+</html>
