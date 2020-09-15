@@ -27,10 +27,40 @@ mongoose.connect('mongodb://localhost:27017/admin-page-2', {useNewUrlParser: tru
 //Models
 const Cha = require('./Models/Cha');
 const Con = require('./Models/Con');
+const SanPham = require('./Models/SanPham');
+
+
+
+app.get('/sp/:ten', function(req, res){
+    const sp = SanPham({
+        Ten: req.params.ten,
+        NgayTao: Date.now()
+    });
+    sp.save(function(err){
+        if(err){
+            res.json({
+                status: "err",
+                message: err
+            });
+        }else{
+            res.json({
+                status: "ok",
+            });
+        }
+    });
+});
+
+app.get('/sp/phantrang/:trang', function(req, res){
+    const soSP1trang = 5;
+    const trang = req.params.trang;
+    const skip = (trang-1)*soSP1trang;
+    SanPham.find({}).sort({NgayTao: '1'}).skip(skip).limit(soSP1trang).exec(function(err, data){
+        res.json({data});
+    });
+});
 
 app.get('/cha_add', function(req, res){
     res.render('cha_add');
-    // res.render("home", {trang: "cha_add", ds});
 });
 app.post('/cha_add', function(req, res){
     const cha = new Cha({
